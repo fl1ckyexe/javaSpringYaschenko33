@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} ?: 'Apartment Rent'">Apartment Rent</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-content">
+        <div class="logo">
+            <a th:href="@{/tenant}">RentFinder</a>
+        </div>
+        <nav class="nav">
+            <a th:href="@{/tenant}" th:classappend="${page=='tenant'} ? 'active' : ''">Find a flat</a>
+            <a th:href="@{/owner}" th:classappend="${page=='owner'} ? 'active' : ''">Post your flat</a>
+            <a th:href="@{/profile}" th:classappend="${page=='profile'} ? 'active' : ''">Profile</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body { font-family: sans-serif; background: #ffeeee; text-align: center; padding: 50px; }
+    </style>
+</head>
+<body>
+<h1>❌ Something went wrong</h1>
+<p th:text="${message}">Unknown error</p>
+<a href="/">Go back to login</a>
+</body>
+</html>
