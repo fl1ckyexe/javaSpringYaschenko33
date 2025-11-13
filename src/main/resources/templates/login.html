@@ -12,12 +12,30 @@
     </style>
 </head>
 <body>
-<h1>🏠 Apartment Rent System</h1>
+
+<h1>Apartment Rent System</h1>
+
 <form th:action="@{/login}" method="post">
-    <label>Username: <input name="username" required></label><br>
-    <label>Password: <input name="password" type="password" required></label><br>
+
+    <label>
+        Username:
+        <input name="username" th:value="${safeUsername}" required>
+    </label><br>
+
+    <label>
+        Password:
+        <input name="password" type="password" required>
+    </label><br>
+
     <button type="submit">Login</button>
 </form>
-<p th:if="${loginError}" style="color: red;">❌ Invalid username or password</p>
+
+<p th:if="${safeUsername}" style="color:gray;">
+    Ви ввели ім'я користувача:
+    <span th:text="${safeUsername}"></span>
+</p>
+
+<p th:if="${loginError}" style="color: red;">Invalid username or password</p>
+
 </body>
 </html>

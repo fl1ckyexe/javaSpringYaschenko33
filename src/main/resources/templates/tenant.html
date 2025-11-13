@@ -2,75 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Поиск квартир</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
-
+    <title>Пошук квартир</title>
 </head>
 <body>
 
-<!-- 🔹 Подключаем header -->
-<div th:replace="fragments/header :: header"></div>
+<h1>Пошук квартир</h1>
 
-<main class="main-content container">
 
-    <h1 class="page-title">Поиск квартир</h1>
+<div th:each="a : ${apartments}">
+    <h3 th:text="${a.title}"></h3>
 
-    <form class="filters" th:action="@{/tenant}" method="get">
-        <div style="display:flex; flex-wrap: wrap; gap:15px; margin-bottom:15px;">
-            <div>
-                <label>Комнат:</label>
-                <select name="rooms">
-                    <option value="0" th:selected="${rooms==0}">Любое</option>
-                    <option value="1" th:selected="${rooms==1}">1</option>
-                    <option value="2" th:selected="${rooms==2}">2</option>
-                    <option value="3" th:selected="${rooms==3}">3</option>
-                    <option value="4" th:selected="${rooms==4}">4</option>
-                </select>
-            </div>
 
-            <div>
-                <label>Планировка:</label>
-                <select name="layout">
-                    <option value="any" th:selected="${layout=='any'}">Любая</option>
-                    <option value="Studio" th:selected="${layout=='Studio'}">Studio</option>
-                    <option value="One-bedroom" th:selected="${layout=='One-bedroom'}">One-bedroom</option>
-                    <option value="Two-bedroom" th:selected="${layout=='Two-bedroom'}">Two-bedroom</option>
-                    <option value="Loft" th:selected="${layout=='Loft'}">Loft</option>
-                </select>
-            </div>
+    <p th:if="${a.price > 1000}" style="color:green;">Комфорт-клас</p>
 
-            <div>
-                <label>Цена от:</label>
-                <input type="number" name="minPrice" step="0.01" th:value="${minPrice}">
-            </div>
 
-            <div>
-                <label>до:</label>
-                <input type="number" name="maxPrice" step="0.01" th:value="${maxPrice}">
-            </div>
+    <p th:unless="${a.price > 1000}" style="color:gray;">Бюджетний варіант</p>
 
-            <div style="align-self: end;">
-                <button type="submit">Поиск</button>
-                <a th:href="@{/tenant}" class="button" style="background:#6b7280;">Сброс</a>
-            </div>
-        </div>
-    </form>
 
-    <div class="apartments">
-        <div th:each="a : ${apartments}" class="apartment">
-            <h3 th:text="${a.title}"></h3>
-            <p><b>Адрес:</b> <span th:text="${a.address}"></span></p>
-            <p><b>Комнат:</b> <span th:text="${a.rooms}"></span></p>
-            <p><b>Планировка:</b> <span th:text="${a.layoutType}"></span></p>
-            <p><b>Цена:</b> <span th:text="${a.price}"></span> $</p>
-            <p><b>Хозяин:</b> <span th:text="${a.ownerUsername}"></span></p>
-        </div>
+    <p>Опис: <span th:text="${a.description ?: 'Опис відсутній'}"></span></p>
+
+
+    <div th:switch="${a.layoutType}">
+        <p th:case="'Studio'">Планування: Студія</p>
+        <p th:case="'Loft'">Планування: Лофт</p>
+        <p th:case="*">Планування: Інше</p>
     </div>
 
-</main>
+    <p><b>Адреса:</b> <span th:text="${a.address}"></span></p>
+    <p><b>Ціна:</b> <span th:text="${a.price}"></span>$</p>
+</div>
 
-<!-- 🔹 Подключаем footer -->
-<div th:replace="fragments/footer :: footer"></div>
+
+<p th:if="${apartments.isEmpty()}" style="color:gray;">Нічого не знайдено</p>
 
 </body>
 </html>
